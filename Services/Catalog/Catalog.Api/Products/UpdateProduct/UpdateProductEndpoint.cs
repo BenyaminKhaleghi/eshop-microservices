@@ -11,7 +11,7 @@ namespace Catalog.Api.Products.UpdateProduct
             {
                 var command = request.Adapt<UpdateProductCommand>();
 
-                var result = sender.Send(command);
+                var result = await sender.Send(command);
 
                 var response = result.Adapt<UpdateProductResponse>();
 
