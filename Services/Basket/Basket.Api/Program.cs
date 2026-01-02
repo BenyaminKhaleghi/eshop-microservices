@@ -1,4 +1,5 @@
 using BuildingBlocks.Exceptions.Handler;
+using Discount.Grpc;
 using HealthChecks.UI.Client;
 using Microsoft.Extensions.Caching.Distributed;
 
@@ -38,7 +39,10 @@ builder.Services.AddStackExchangeRedisCache(options =>
 //    var basketRepository = provider.GetRequiredService<IBasketRepository>();
 //    return new CachedBasketRepository(basketRepository, provider.GetRequiredService<IDistributedCache>());
 //});
-
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options => 
+{
+    options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+});
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 builder.Services.AddHealthChecks()
